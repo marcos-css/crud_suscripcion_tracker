@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}Iniciar Sesión{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card shadow">
+          <div class="card-header bg-dark text-white">
+            <h4 class="mb-0">Iniciar Sesión</h4>
+          </div>
+          <div class="card-body">
+            {% if error %}
+            <div class="alert alert-danger" role="alert">
+              {{ error }} <!-- Mensaje de error si el inicio de sesión falla -->
+            </div>
+            {% endif %}
+            
+            <form method="POST" class="row g-3 needs-validation" novalidate>
+              {% csrf_token %}
+              
+              <div class="col-12">
+                <label for="id_username" class="form-label">Usuario</label>
+                <div class="input-group has-validation">
+                  <span class="input-group-text" id="inputGroupPrepend">@</span>
+                  <input type="text" name="username" class="form-control {% if form.username.errors %}is-invalid{% endif %}"
+                         id="id_username" required> 
+                  {% if form.username.errors %}
+                  <div class="invalid-feedback">
+                    {{ form.username.errors }}
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+              
+              <div class="col-12">
+                <label for="id_password" class="form-label">Contraseña</label>
+                <input type="password" name="password" class="form-control {% if form.password.errors %}is-invalid{% endif %}" 
+                       id="id_password" required>
+                {% if form.password.errors %}
+                <div class="invalid-feedback">
+                  {{ form.password.errors }}
+                </div>
+                {% endif %}
+              </div>
+              
+              <div class="col-12 mt-4">
+                <button class="btn btn-secondary w-100" type="submit" 
+                       style="border: 2px solid #495057;">
+                  Iniciar Sesión
+                </button>
+              </div>
+            </form>
+            
+            <div class="text-center mt-3">
+              <p>¿No tienes una cuenta? <a href="{% url 'signup' %}" class="text-muted">Regístrate</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Código para validación del lado del cliente
+    (function () {
+      'use strict'
+      var forms = document.querySelectorAll('.needs-validation')
+      Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+            }
+            form.classList.add('was-validated')
+          }, false)
+        })
+    })()
+  </script>
+
+{% endblock %}

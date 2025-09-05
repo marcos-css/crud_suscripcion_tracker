@@ -4,6 +4,66 @@
 {% block title %} Inicio {% endblock %}
 
 {% block content %}
-<h1>hola compañeres</h1>
-<p>esta es la pagina de inicio yay</p>
+<div class="container mt-4">
+    {% if user.is_authenticated %}
+        <h2>Mis Suscripciones</h2>
+        
+        <!-- Resumen -->
+        {% if suscripciones %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-4">
+                            <h5>Total Suscripciones</h5>
+                            <h3 class="text-secondary">{{ total_suscripciones }}</h3>
+                        </div>
+                        <div class="col-md-4">
+                            <h5>Gasto Mensual</h5>
+                            <h3 class="text-secondary">${{ gasto_mensual }}</h3>
+                        </div>
+                        <div class="col-md-4">
+                            <h5>Gasto Anual</h5>
+                            <h3 class="text-secondary">${{ gasto_anual }}</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Lista de suscripciones -->
+            <div class="row">
+                {% for suscripcion in suscripciones %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ suscripcion.nombre_servicio }}</h5>
+                            <p class="card-text">
+                                <strong>${{ suscripcion.costo }}</strong> / {{ suscripcion.get_frecuencia_pago_display|lower }}
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">
+                                    Renovación: {{ suscripcion.fecha_renovacion }}
+                                    <br>
+                                    ({{ suscripcion.dias_hasta_renovacion }} días restantes)
+                                </small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center mt-5">
+                <h4>No tienes suscripciones registradas</h4>
+                <p class="text-muted">Agrega tu primera suscripción para comenzar</p>
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="text-center mt-5">
+            <h1>Bienvenido a Subscription Tracker</h1>
+            <p class="lead">Controla tus suscripciones digitales</p>
+            <a href="/signin" class="btn btn-secondary me-2">Iniciar Sesión</a>
+            <a href="/signup" class="btn btn-outline-secondary">Registrarse</a>
+        </div>
+    {% endif %}
+</div>
 {% endblock %}
