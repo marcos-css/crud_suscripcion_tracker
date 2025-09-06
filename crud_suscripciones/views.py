@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from .models import Suscripcion
+from django.contrib.auth.decorators import login_required
+from .forms import SuscripcionForm
+
 
 # Create your views here.
 def inicio(request):
@@ -78,3 +81,15 @@ def signin(request):
             login(request, user)
             return redirect('/')
         
+
+def crear_suscripcion(request):
+    if request.method == 'POST':
+        form = SuscripcionForm(request.POST)
+        if form.is_valid():
+            nueva_sus = form.save(commit=False)
+            nueva_sus.usuario = request.user
+            nueva_sus.save()
+            return redirect('inicio')  # vuelve a la lista de suscripciones
+    else:
+        form = SuscripcionForm()
+    return render(request, 'crear_suscripcion.html', {'form': form})
