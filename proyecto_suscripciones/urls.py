@@ -11,4 +11,6 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('logout/', views.signout, name='logout'),
     path('suscripciones/crear/', views.crear_suscripcion, name='crear_suscripcion'),
+    path('editar/<int:id>/', views.editar_suscripcion, name='editar_suscripcion'),
+    path('notificaciones/', views.configurar_notificaciones, name='configurar_notificaciones'),
 ]

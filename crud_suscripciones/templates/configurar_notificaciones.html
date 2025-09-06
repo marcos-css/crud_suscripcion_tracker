@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Configurar Notificaciones{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-dark text-white">
+                    <h4 class="mb-0">Configurar Notificaciones</h4>
+                </div>
+                <div class="card-body">
+                    {% if mensaje %}
+                    <div class="alert alert-success" role="alert">
+                        {{ mensaje }}
+                    </div>
+                    {% endif %}
+                    
+                    {% if error %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                    {% endif %}
+                    
+                    <form method="POST">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="dias_aviso" class="form-label">Días de anticipación</label>
+                            <select class="form-control" id="dias_aviso" name="dias_aviso">
+                                <option value="1" {% if config.dias_aviso == 1 %}selected{% endif %}>1 día antes</option>
+                                <option value="3" {% if config.dias_aviso == 3 %}selected{% endif %}>3 días antes</option>
+                                <option value="5" {% if config.dias_aviso == 5 %}selected{% endif %}>5 días antes</option>
+                                <option value="7" {% if config.dias_aviso == 7 %}selected{% endif %}>7 días antes</option>
+                                <option value="15" {% if config.dias_aviso == 15 %}selected{% endif %}>15 días antes</option>
+                            </select>
+                            <div class="form-text">Selecciona con cuántos días de anticipación quieres recibir el recordatorio</div>
+                        </div>
+                        
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="activa" 
+                                   name="activa" {% if config.activa %}checked{% endif %}>
+                            <label class="form-check-label" for="activa">
+                                Activar notificaciones por email
+                            </label>
+                        </div>
+                        
+                        <div class="mb-3">
+                             <label for="email_notificaciones" class="form-label">Email de notificaciones</label>
+                             <input type="email" class="form-control" id="email_notificaciones" 
+                             name="email_notificaciones" 
+                             value="{{ config.email_notificaciones|default:user.email }}" required>
+                             <div class="form-text">Ingresa el email donde quieres recibir las notificaciones</div>
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="/" class="btn btn-outline-secondary me-md-2">Cancelar</a>
+                            <button type="submit" class="btn btn-secondary">Guardar Configuración</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -29,4 +29,5 @@ class Suscripcion(models.Model):
 class ConfiguracionNotificacion(models.Model):
     usuario = models.OneToOneField(User, on_delete=models.CASCADE)
     dias_aviso = models.IntegerField(default=3)
+    email_notificaciones = models.EmailField(blank=True)
     activa = models.BooleanField(default=True)

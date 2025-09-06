@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar Suscripción{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-dark text-white">
+                    <h4 class="mb-0">Editar Suscripción</h4>
+                </div>
+                <div class="card-body">
+                    {% if error %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                    {% endif %}
+                    
+                    <form method="POST">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="nombre_servicio" class="form-label">Nombre del Servicio</label>
+                            <input type="text" class="form-control" id="nombre_servicio" 
+                                   name="nombre_servicio" value="{{ suscripcion.nombre_servicio }}" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="costo" class="form-label">Costo</label>
+                            <input type="number" step="0.01" class="form-control" id="costo" 
+                                   name="costo" value="{{ suscripcion.costo }}" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="frecuencia_pago" class="form-label">Frecuencia de Pago</label>
+                            <select class="form-control" id="frecuencia_pago" name="frecuencia_pago" required>
+                                <option value="mensual" {% if suscripcion.frecuencia_pago == 'mensual' %}selected{% endif %}>Mensual</option>
+                                <option value="anual" {% if suscripcion.frecuencia_pago == 'anual' %}selected{% endif %}>Anual</option>
+                                <option value="trimestral" {% if suscripcion.frecuencia_pago == 'trimestral' %}selected{% endif %}>Trimestral</option>
+                                <option value="semanal" {% if suscripcion.frecuencia_pago == 'semanal' %}selected{% endif %}>Semanal</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="fecha_renovacion" class="form-label">Fecha de Renovación</label>
+                            <input type="date" class="form-control" id="fecha_renovacion" 
+                                   name="fecha_renovacion" value="{{ suscripcion.fecha_renovacion|date:'Y-m-d' }}" required>
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="/" class="btn btn-outline-secondary me-md-2">Cancelar</a>
+                            <button type="submit" class="btn btn-secondary">Actualizar Suscripción</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
