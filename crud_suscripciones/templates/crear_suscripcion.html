@@ -8,13 +8,16 @@
     <div class="col-md-6">
       <div class="card shadow">
         <div class="card-header bg-dark text-white">
-          <h4 class="mb-0">Agregar Suscripción</h4>
+          <h4 class="m-2">Agregar Suscripción</h4>
         </div>
         <div class="card-body">
           <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn btn-secondary w-100">Guardar</button>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+              <a type="submit" href="/" class="btn btn-outline-secondary ">Cancelar</a>
+              <button type="submit" class="btn btn-success ">Agregar</button>
+            </div>
           </form>
         </div>
       </div>

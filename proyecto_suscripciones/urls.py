@@ -12,5 +12,6 @@ urlpatterns = [
     path('logout/', views.signout, name='logout'),
     path('suscripciones/crear/', views.crear_suscripcion, name='crear_suscripcion'),
     path('editar/<int:id>/', views.editar_suscripcion, name='editar_suscripcion'),
+    path('eliminar/<int:id>/', views.eliminar_suscripcion, name='eliminar_suscripcion'),
     path('notificaciones/', views.configurar_notificaciones, name='configurar_notificaciones'),
 ]

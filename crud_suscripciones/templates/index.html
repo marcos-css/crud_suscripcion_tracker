@@ -31,26 +31,9 @@
             
             <!-- Lista de suscripciones -->
             <div class="row">
-                {% for suscripcion in suscripciones %}
-                <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ suscripcion.nombre_servicio }}</h5>
-                            <p class="card-text">
-                                <strong>${{ suscripcion.costo }}</strong> / {{ suscripcion.get_frecuencia_pago_display|lower }}
-                            </p>
-                            <p class="card-text">
-                                <small class="text-muted">
-                                    Renovación: {{ suscripcion.fecha_renovacion }}
-                                    <br>
-                                    ({{ suscripcion.dias_hasta_renovacion }} días restantes)
-                                </small>
-                            </p>
-                            <a href="/editar/{{ suscripcion.id }}/" class="btn btn-outline-secondary btn-sm">Editar</a>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
+                    {% for suscripcion in suscripciones %}
+                        {% include 'components/card_suscripcion.html' %}
+                    {% endfor %}
             </div>
         {% else %}
             <div class="text-center mt-5">
