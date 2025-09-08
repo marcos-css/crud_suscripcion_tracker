@@ -163,3 +163,11 @@ def configurar_notificaciones(request):
                 'config': config,
                 'error': 'Error al guardar la configuración'
             })
+
+@login_required
+def eliminar_suscripcion(request, id):
+    if request.method == "POST":
+        suscripcion = get_object_or_404(Suscripcion, id=id, usuario=request.user)
+        suscripcion.delete()
+    # Redirigimos a la página de inicio o lista de suscripciones
+    return redirect('inicio') 

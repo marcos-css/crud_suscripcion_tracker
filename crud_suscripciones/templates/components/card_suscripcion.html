@@ -1,0 +1,49 @@
+<div class="col-md-4 mb-3">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ suscripcion.nombre_servicio }}</h5>
+            <p class="card-text">
+                <strong>${{ suscripcion.costo }}</strong> / {{ suscripcion.get_frecuencia_pago_display|lower }}
+            </p>
+            <p class="card-text">
+                <small class="text-muted">
+                    Renovación: {{ suscripcion.fecha_renovacion }}
+                    <br>
+                    ({{ suscripcion.dias_hasta_renovacion }} días restantes)
+                </small>
+            </p>
+            <div class="d-flex justify-content-between">
+                <!-- boton de editar -->
+                <a href="/editar/{{ suscripcion.id }}/" class="btn btn-outline-secondary btn-sm">Editar</a>
+                <!-- boton de eliminar -->
+                <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmarEliminar{{ suscripcion.id }}">
+                    Eliminar
+                </button>
+            </div>
+
+            <!-- Modal de confirmación -->
+            <div class="modal fade" id="confirmarEliminar{{ suscripcion.id }}" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Confirmar eliminación</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                        </div>
+                        <div class="modal-body">
+                            ¿Seguro que deseas eliminar la suscripción <strong>{{ suscripcion.nombre_servicio }}</strong>?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <form action="{% url 'eliminar_suscripcion' suscripcion.id %}" method="post" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Fin del modal -->
+
+        </div>
+    </div>
+</div>
